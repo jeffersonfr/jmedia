@@ -1,0 +1,14 @@
+prefix="@CMAKE_INSTALL_PREFIX@"
+exec_prefix="${prefix}"
+libdir="${prefix}/lib"
+includedir="${prefix}/include"
+
+Name: jCanvas
+Description: A library for abstract a host graphic engine
+URL: https://github.com/me/jeffersonfr/jmedia
+Version: 0.0.1
+Requires: @PKGCONF_REQ_PUB@
+Requires.private: @PKGCONF_REQ_PRIV@
+Cflags: -I"${includedir}" @JCANVAS_INCLUDE_DIRS@
+Libs: -L"${libdir}" -ljmedia @JMEDIA_LIBRARIES@
+Libs.private: -L"${libdir}" -ljmedia @JMEDIA_LIBRARIES@
