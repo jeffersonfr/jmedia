@@ -37,7 +37,6 @@ class MediaStart {
 
 	public:
 		jmedia::Player *_player;
-    std::thread _thread;
 		int _dx;
 		int _dy;
 
@@ -51,24 +50,24 @@ class MediaStart {
 
 		virtual ~MediaStart()
 		{
-			delete _player;
+      Stop();
 		}
 
     virtual void Start()
     {
-      _thread = std::thread(&MediaStart::Run, this);
+       _player->Play();
     }
 
 		virtual void Stop()
 		{
+      if (_player == nullptr) {
+        return;
+      }
+
 			_player->Stop();
 
-      _thread.join();
-		}
-
-		virtual void Run()
-		{
-			_player->Play();
+      delete _player;
+      _player = nullptr;
 		}
 
 };
@@ -90,15 +89,13 @@ class PlayerTest : public jcanvas::Frame, public jmedia::PlayerListener, public 
 
 		virtual ~PlayerTest()
 		{
-      _mutex.lock();
+      std::lock_guard<std::mutex> lock(_mutex);
 
 			for (int i=0; i<(int)_players.size(); i++) {
 				MediaStart *media = _players[i];
 
 				delete media;
 			}
-      
-      _mutex.unlock();
 		}
 
     void Init()
@@ -125,20 +122,16 @@ class PlayerTest : public jcanvas::Frame, public jmedia::PlayerListener, public 
 
 		virtual void StartMedia()
 		{
-      _mutex.lock();
-
 			for (std::vector<MediaStart *>::iterator i=_players.begin(); i!=_players.end(); i++) {
 				(*i)->Start();
 			}
 			
 			_is_playing = true;
-      
-      _mutex.unlock();
 		}
 
 		virtual void StopMedia()
 		{
-      _mutex.lock();
+      SetVisible(false);
 
 			for (std::vector<MediaStart *>::iterator i=_players.begin(); i!=_players.end(); i++) {
 				(*i)->Stop();
@@ -147,17 +140,11 @@ class PlayerTest : public jcanvas::Frame, public jmedia::PlayerListener, public 
 			RemoveAll();
 
 			_is_playing = false;
-      
-      _mutex.unlock();
 		}
 
 		virtual void Render()
 		{
-      _mutex.lock();
-
 			if (_is_playing == false) {
-        _mutex.unlock();
-
 				return;
 			}
 
@@ -194,8 +181,6 @@ class PlayerTest : public jcanvas::Frame, public jmedia::PlayerListener, public 
 
 				cmp->SetLocation(location);
 			}
-        
-      _mutex.unlock();
 		}
 
 		virtual void MediaStarted(jmedia::PlayerEvent *event)
@@ -234,11 +219,13 @@ class PlayerTest : public jcanvas::Frame, public jmedia::PlayerListener, public 
 
 		virtual void ShowApp() 
     {
+      std::lock_guard<std::mutex> lock(_mutex);
+
       StartMedia();
 
       int k = 100;
 
-      while (k-- > 0) {
+      while (IsVisible() == true) {
         Render();
 
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -261,11 +248,11 @@ int main(int argc, char **argv)
 
 	srand(time(nullptr));
 
-	auto app = std::make_shared<PlayerTest>(argv[1]);
+	PlayerTest app(argv[1]);
 
-	app->SetTitle("Video Player");
-  app->Init();
-  app->Exec();
+	app.SetTitle("Video Player");
+  app.Init();
+  app.Exec();
 
 	jcanvas::Application::Loop();
 
