@@ -208,7 +208,7 @@ class V4l2VideoSizeControlImpl : public VideoSizeControl {
 
 		virtual void SetSize(int w, int h)
 		{
-      std::shared_ptr<V4l2PlayerComponentImpl> impl = std::dynamic_pointer_cast<V4l2PlayerComponentImpl>(_player->_component);
+      V4l2PlayerComponentImpl *impl = dynamic_cast<V4l2PlayerComponentImpl *>(_player->_component);
 			VideoGrabber *grabber = _player->_grabber;
 
       impl->_mutex.lock();
@@ -224,7 +224,7 @@ class V4l2VideoSizeControlImpl : public VideoSizeControl {
 
 		virtual void SetSource(int x, int y, int w, int h)
 		{
-      std::shared_ptr<V4l2PlayerComponentImpl> impl = std::dynamic_pointer_cast<V4l2PlayerComponentImpl>(_player->_component);
+      V4l2PlayerComponentImpl *impl = dynamic_cast<V4l2PlayerComponentImpl *>(_player->_component);
 
       impl->_mutex.lock();
 			
@@ -237,7 +237,7 @@ class V4l2VideoSizeControlImpl : public VideoSizeControl {
 
 		virtual void SetDestination(int x, int y, int w, int h)
 		{
-      std::shared_ptr<V4l2PlayerComponentImpl> impl = std::dynamic_pointer_cast<V4l2PlayerComponentImpl>(_player->_component);
+      V4l2PlayerComponentImpl *impl = dynamic_cast<V4l2PlayerComponentImpl *>(_player->_component);
 
       impl->_mutex.lock();
 
@@ -248,17 +248,17 @@ class V4l2VideoSizeControlImpl : public VideoSizeControl {
 
 		virtual jcanvas::jpoint_t<int> GetSize()
 		{
-      return std::dynamic_pointer_cast<V4l2PlayerComponentImpl>(_player->_component)->GetPreferredSize();
+      return dynamic_cast<V4l2PlayerComponentImpl *>(_player->_component)->GetPreferredSize();
 		}
 
 		virtual jcanvas::jrect_t<int> GetSource()
 		{
-      return std::dynamic_pointer_cast<V4l2PlayerComponentImpl>(_player->_component)->_src;
+      return dynamic_cast<V4l2PlayerComponentImpl *>(_player->_component)->_src;
 		}
 
 		virtual jcanvas::jrect_t<int> GetDestination()
 		{
-      return std::dynamic_pointer_cast<V4l2PlayerComponentImpl>(_player->_component)->GetBounds();
+      return dynamic_cast<V4l2PlayerComponentImpl *>(_player->_component)->GetBounds();
 		}
 
 };
@@ -454,7 +454,7 @@ V4L2LightPlayer::V4L2LightPlayer(std::string uri):
 	_controls.push_back(new V4l2VideoFormatControlImpl(this));
 	_controls.push_back(new V4l2VideoDeviceControlImpl(this));
 	
-	_component = std::make_shared<V4l2PlayerComponentImpl>(this, 0, 0, -1, -1);
+	_component = new V4l2PlayerComponentImpl(this, 0, 0, -1, -1);
 }
 
 V4L2LightPlayer::~V4L2LightPlayer()
@@ -474,7 +474,7 @@ V4L2LightPlayer::~V4L2LightPlayer()
 
 void V4L2LightPlayer::ProcessFrame(const uint8_t *buffer, int width, int height, jcanvas::jpixelformat_t format)
 {
-  std::dynamic_pointer_cast<V4l2PlayerComponentImpl>(_component)->UpdateComponent(buffer, width, height, format);
+  dynamic_cast<V4l2PlayerComponentImpl *>(_component)->UpdateComponent(buffer, width, height, format);
 }
 
 void V4L2LightPlayer::Play()
@@ -577,7 +577,7 @@ double V4L2LightPlayer::GetDecodeRate()
 	return 0.0;
 }
 
-std::shared_ptr<jcanvas::Component> V4L2LightPlayer::GetVisualComponent()
+jcanvas::Component * V4L2LightPlayer::GetVisualComponent()
 {
 	return _component;
 }

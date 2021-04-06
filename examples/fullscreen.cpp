@@ -197,7 +197,7 @@ class PlayerTest : public jcanvas::Frame, public jmedia::PlayerListener, public 
 
     void Init()
     {
-      std::shared_ptr<jcanvas::Component> cmp = _player->GetVisualComponent();
+      jcanvas::Component *cmp = _player->GetVisualComponent();
 
       if (cmp != nullptr) {
   			cmp->SetSize(720, 480);
@@ -339,15 +339,15 @@ int main(int argc, char **argv)
 
 	srand(time(nullptr));
 
-	auto app = std::make_shared<PlayerTest>(argv[1]);
+	PlayerTest app(argv[1]);
 
-	app->SetTitle("Video Player");
-  app->Init();
-  app->StartMedia();
+	app.SetTitle("Video Player");
+  app.Init();
+  app.StartMedia();
 	
 	jcanvas::Application::Loop();
 
-	app->StopMedia();
+	app.StopMedia();
 
 	return 0;
 }

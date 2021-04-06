@@ -328,7 +328,7 @@ class GStreamerVideoSizeControlImpl : public VideoSizeControl {
 
 		virtual void SetSource(int x, int y, int w, int h)
 		{
-      std::shared_ptr<GStreamerPlayerComponentImpl> impl = std::dynamic_pointer_cast<GStreamerPlayerComponentImpl>(_player->_component);
+      GStreamerPlayerComponentImpl *impl = dynamic_cast<GStreamerPlayerComponentImpl *>(_player->_component);
 
       std::unique_lock<std::mutex> lock(impl->_mutex);
 			
@@ -339,7 +339,7 @@ class GStreamerVideoSizeControlImpl : public VideoSizeControl {
 
 		virtual void SetDestination(int x, int y, int w, int h)
 		{
-      std::shared_ptr<GStreamerPlayerComponentImpl> impl = std::dynamic_pointer_cast<GStreamerPlayerComponentImpl>(_player->_component);
+      GStreamerPlayerComponentImpl *impl = dynamic_cast<GStreamerPlayerComponentImpl *>(_player->_component);
 
       std::unique_lock<std::mutex> lock(impl->_mutex);
 
@@ -348,12 +348,12 @@ class GStreamerVideoSizeControlImpl : public VideoSizeControl {
 
 		virtual jcanvas::jrect_t<int> GetSource()
 		{
-      return std::dynamic_pointer_cast<GStreamerPlayerComponentImpl>(_player->_component)->_src;
+      return dynamic_cast<GStreamerPlayerComponentImpl *>(_player->_component)->_src;
 		}
 
 		virtual jcanvas::jrect_t<int> GetDestination()
 		{
-      return std::dynamic_pointer_cast<GStreamerPlayerComponentImpl>(_player->_component)->GetBounds();
+      return dynamic_cast<GStreamerPlayerComponentImpl *>(_player->_component)->GetBounds();
 		}
 
 };
@@ -533,7 +533,7 @@ static GstFlowReturn SampleCallback(GstAppSink *appsink, gpointer data)
   int w = GST_VIDEO_FRAME_WIDTH(&v_frame);
   int h = GST_VIDEO_FRAME_HEIGHT(&v_frame);
 
-  std::static_pointer_cast<GStreamerPlayerComponentImpl>(player->_component)->UpdateComponent(pixels, w, h);
+  dynamic_cast<GStreamerPlayerComponentImpl *>(player->_component)->UpdateComponent(pixels, w, h);
 
   gst_video_frame_unmap(&v_frame);
   gst_sample_unref(sample);
@@ -668,7 +668,7 @@ GStreamerLightPlayer::GStreamerLightPlayer(std::string uri):
     }
   }
 
-  _component = std::make_shared<GStreamerPlayerComponentImpl>(this, 0, 0, iw, ih);
+  _component = new GStreamerPlayerComponentImpl(this, 0, 0, iw, ih);
 }
 
 GStreamerLightPlayer::~GStreamerLightPlayer()
@@ -869,7 +869,7 @@ double GStreamerLightPlayer::GetDecodeRate()
   return _decode_rate;
 }
 
-std::shared_ptr<jcanvas::Component> GStreamerLightPlayer::GetVisualComponent()
+jcanvas::Component * GStreamerLightPlayer::GetVisualComponent()
 {
 	return _component;
 }

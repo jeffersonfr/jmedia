@@ -111,7 +111,7 @@ class PlayerTest : public jcanvas::Frame, public jmedia::PlayerListener, public 
 				player->RegisterPlayerListener(this);
 				player->RegisterFrameGrabberListener(this);
 
-        std::shared_ptr<jcanvas::Component> cmp = player->GetVisualComponent();
+        jcanvas::Component *cmp = player->GetVisualComponent();
 
 				cmp->SetBounds(random()%(size.x - BOX_SIZE), random()%(size.y - BOX_SIZE), BOX_SIZE, BOX_SIZE);
 
@@ -166,7 +166,7 @@ class PlayerTest : public jcanvas::Frame, public jmedia::PlayerListener, public 
 			for (std::vector<MediaStart *>::iterator i=_players.begin(); i!=_players.end(); i++) {
 				MediaStart *media = (*i);
 	
-        std::shared_ptr<jcanvas::Component> cmp = media->_player->GetVisualComponent();
+        jcanvas::Component *cmp = media->_player->GetVisualComponent();
 				jcanvas::jpoint_t location = cmp->GetLocation();
 
 				location.x = location.x+media->_dx*BOX_STEP;

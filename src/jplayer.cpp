@@ -108,7 +108,7 @@ const std::vector<Control *> & Player::GetControls()
   return _controls;
 }
 
-std::shared_ptr<jcanvas::Component> Player::GetVisualComponent()
+jcanvas::Component * Player::GetVisualComponent()
 {
   return nullptr;
 }

@@ -37,7 +37,7 @@ class LibAVLightPlayer : public Player {
 		/** \brief */
 		std::string _file;
 		/** \brief */
-    std::shared_ptr<jcanvas::Component> _component;
+    jcanvas::Component *_component;
 		/** \brief */
 		double _aspect;
 		/** \brief */
@@ -142,7 +142,7 @@ class LibAVLightPlayer : public Player {
 		 * \brief
 		 *
 		 */
-		virtual std::shared_ptr<jcanvas::Component> GetVisualComponent();
+		virtual jcanvas::Component * GetVisualComponent();
 
 };
 

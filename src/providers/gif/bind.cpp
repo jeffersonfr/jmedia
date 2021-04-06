@@ -750,7 +750,7 @@ class GifVideoSizeControlImpl : public VideoSizeControl {
 
 		virtual void SetSource(int x, int y, int w, int h)
 		{
-      std::shared_ptr<GifPlayerComponentImpl> impl = std::dynamic_pointer_cast<GifPlayerComponentImpl>(_player->_component);
+      GifPlayerComponentImpl *impl = dynamic_cast<GifPlayerComponentImpl *>(_player->_component);
 
       impl->_mutex.lock();
 			
@@ -763,7 +763,7 @@ class GifVideoSizeControlImpl : public VideoSizeControl {
 
 		virtual void SetDestination(int x, int y, int w, int h)
 		{
-      std::shared_ptr<GifPlayerComponentImpl> impl = std::dynamic_pointer_cast<GifPlayerComponentImpl>(_player->_component);
+      GifPlayerComponentImpl *impl = dynamic_cast<GifPlayerComponentImpl *>(_player->_component);
 
       impl->_mutex.lock();
 
@@ -774,12 +774,12 @@ class GifVideoSizeControlImpl : public VideoSizeControl {
 
 		virtual jcanvas::jrect_t<int> GetSource()
 		{
-			return std::dynamic_pointer_cast<GifPlayerComponentImpl>(_player->_component)->_src;
+			return dynamic_cast<GifPlayerComponentImpl *>(_player->_component)->_src;
 		}
 
 		virtual jcanvas::jrect_t<int> GetDestination()
 		{
-			return std::dynamic_pointer_cast<GifPlayerComponentImpl>(_player->_component)->GetBounds();
+			return dynamic_cast<GifPlayerComponentImpl *>(_player->_component)->GetBounds();
 		}
 
 };
@@ -848,7 +848,7 @@ GIFLightPlayer::GIFLightPlayer(std::string uri):
 
 	_controls.push_back(new GifVideoSizeControlImpl(this));
 
-	_component = std::make_shared<GifPlayerComponentImpl>(this, 0, 0, data->Width, data->Height);
+	_component = new GifPlayerComponentImpl(this, 0, 0, data->Width, data->Height);
 	
 	_provider = data;
 }
@@ -902,7 +902,7 @@ void GIFLightPlayer::Run()
 		}
 
 		if (skip == false) {
-      std::dynamic_pointer_cast<GifPlayerComponentImpl>(_component)->UpdateComponent(data->image);
+      dynamic_cast<GifPlayerComponentImpl *>(_component)->UpdateComponent(data->image);
 
 			try {
 				if (_decode_rate == 0) {
@@ -1070,7 +1070,7 @@ double GIFLightPlayer::GetDecodeRate()
 	return _decode_rate;
 }
 
-std::shared_ptr<jcanvas::Component> GIFLightPlayer::GetVisualComponent()
+jcanvas::Component * GIFLightPlayer::GetVisualComponent()
 {
 	return _component;
 }

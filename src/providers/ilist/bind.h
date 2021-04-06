@@ -43,7 +43,7 @@ class ImageListLightPlayer : public Player {
 		/** \brief */
 		std::string _directory;
 		/** \brief */
-    std::shared_ptr<jcanvas::Component> _component;
+    jcanvas::Component *_component {nullptr};
 		/** \brief */
 		double _aspect;
 		/** \brief */
@@ -154,7 +154,7 @@ class ImageListLightPlayer : public Player {
 		 * \brief
 		 *
 		 */
-		virtual std::shared_ptr<jcanvas::Component> GetVisualComponent();
+		virtual jcanvas::Component * GetVisualComponent();
 
 		/**
 		 * \brief

@@ -37,7 +37,7 @@ class V4L2LightPlayer : public Player, public V4LFrameListener {
 		/** \brief */
 		std::string _file;
 		/** \brief */
-    std::shared_ptr<jcanvas::Component> _component;
+    jcanvas::Component *_component;
 		/** \brief */
 		double _aspect;
 		/** \brief */
@@ -155,7 +155,7 @@ class V4L2LightPlayer : public Player, public V4LFrameListener {
 		 * \brief
 		 *
 		 */
-		virtual std::shared_ptr<jcanvas::Component> GetVisualComponent();
+		virtual jcanvas::Component * GetVisualComponent();
 
 };
 

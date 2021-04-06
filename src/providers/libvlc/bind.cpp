@@ -410,7 +410,7 @@ class LibvlcVideoSizeControlImpl : public VideoSizeControl {
 
 		virtual void SetSource(int x, int y, int w, int h)
 		{
-      std::shared_ptr<LibvlcPlayerComponentImpl> impl = std::dynamic_pointer_cast<LibvlcPlayerComponentImpl>(_player->_component);
+      LibvlcPlayerComponentImpl *impl = dynamic_cast<LibvlcPlayerComponentImpl *>(_player->_component);
 
       std::unique_lock<std::mutex> lock(impl->_mutex);
 			
@@ -421,7 +421,7 @@ class LibvlcVideoSizeControlImpl : public VideoSizeControl {
 
 		virtual void SetDestination(int x, int y, int w, int h)
 		{
-      std::shared_ptr<LibvlcPlayerComponentImpl> impl = std::dynamic_pointer_cast<LibvlcPlayerComponentImpl>(_player->_component);
+      LibvlcPlayerComponentImpl *impl = dynamic_cast<LibvlcPlayerComponentImpl *>(_player->_component);
 
       std::unique_lock<std::mutex> lock(impl->_mutex);
 
@@ -430,12 +430,12 @@ class LibvlcVideoSizeControlImpl : public VideoSizeControl {
 
 		virtual jcanvas::jrect_t<int> GetSource()
 		{
-      return std::dynamic_pointer_cast<LibvlcPlayerComponentImpl>(_player->_component)->_src;
+      return dynamic_cast<LibvlcPlayerComponentImpl *>(_player->_component)->_src;
 		}
 
 		virtual jcanvas::jrect_t<int> GetDestination()
 		{
-      return std::dynamic_pointer_cast<LibvlcPlayerComponentImpl>(_player->_component)->GetBounds();
+      return dynamic_cast<LibvlcPlayerComponentImpl *>(_player->_component)->GetBounds();
 		}
 
 };
@@ -632,10 +632,10 @@ LibVLCLightPlayer::LibVLCLightPlayer(std::string uri):
 
 	_media_time = (uint64_t)libvlc_media_get_duration(media);
 
-  _component = std::make_shared<LibvlcPlayerComponentImpl>(this, 0, 0, iw, ih);
+  _component = new LibvlcPlayerComponentImpl(this, 0, 0, iw, ih);
 
 	libvlc_video_set_format(_provider, "RV32", iw, ih, iw*4);
-	libvlc_video_set_callbacks(_provider, LockMediaSurface, UnlockMediaSurface, DisplayMediaSurface, _component.get());
+	libvlc_video_set_callbacks(_provider, LockMediaSurface, UnlockMediaSurface, DisplayMediaSurface, _component);
 
 	_media_info.title = std::string(libvlc_media_get_meta(media, libvlc_meta_Title)?:"");
 	_media_info.author = std::string(libvlc_media_get_meta(media, libvlc_meta_Artist)?:"");
@@ -833,7 +833,7 @@ double LibVLCLightPlayer::GetDecodeRate()
 	return rate;
 }
 
-std::shared_ptr<jcanvas::Component> LibVLCLightPlayer::GetVisualComponent()
+jcanvas::Component * LibVLCLightPlayer::GetVisualComponent()
 {
 	return _component;
 }

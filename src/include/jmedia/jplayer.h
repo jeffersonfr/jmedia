@@ -171,7 +171,7 @@ class Player {
      *
      * \return
      */
-    virtual std::shared_ptr<jcanvas::Component> GetVisualComponent();
+    virtual jcanvas::Component * GetVisualComponent();
 
     /**
      * \brief Registry a listener.

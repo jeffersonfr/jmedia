@@ -328,7 +328,7 @@ AlsaLightPlayer::AlsaLightPlayer(std::string uri):
 
 	_buffer = (uint8_t *)malloc(_buffer_length);
 
-	_component = std::make_shared<jcanvas::Component>();
+	_component = new jcanvas::Component();
 
 	_controls.push_back(new AlsaVolumeControlImpl(this));
 }
@@ -503,7 +503,7 @@ double AlsaLightPlayer::GetDecodeRate()
 	return _decode_rate;
 }
 
-std::shared_ptr<jcanvas::Component> AlsaLightPlayer::GetVisualComponent()
+jcanvas::Component * AlsaLightPlayer::GetVisualComponent()
 {
 	return _component;
 }

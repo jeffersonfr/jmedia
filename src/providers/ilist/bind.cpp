@@ -151,7 +151,7 @@ class IlistVideoSizeControlImpl : public VideoSizeControl {
 
 		virtual void SetSource(int x, int y, int w, int h)
 		{
-      std::shared_ptr<IlistPlayerComponentImpl> impl = std::dynamic_pointer_cast<IlistPlayerComponentImpl>(_player->_component);
+      IlistPlayerComponentImpl *impl = dynamic_cast<IlistPlayerComponentImpl *>(_player->_component);
 
       impl->_mutex.lock();
 
@@ -164,7 +164,7 @@ class IlistVideoSizeControlImpl : public VideoSizeControl {
 
 		virtual void SetDestination(int x, int y, int w, int h)
 		{
-      std::shared_ptr<IlistPlayerComponentImpl> impl = std::dynamic_pointer_cast<IlistPlayerComponentImpl>(_player->_component);
+      IlistPlayerComponentImpl *impl = dynamic_cast<IlistPlayerComponentImpl *>(_player->_component);
 
       impl->_mutex.lock();
 
@@ -175,12 +175,12 @@ class IlistVideoSizeControlImpl : public VideoSizeControl {
 
 		virtual jcanvas::jrect_t<int> GetSource()
 		{
-			return std::dynamic_pointer_cast<IlistPlayerComponentImpl>(_player->_component)->_src;
+			return dynamic_cast<IlistPlayerComponentImpl *>(_player->_component)->_src;
 		}
 
 		virtual jcanvas::jrect_t<int> GetDestination()
 		{
-			return std::dynamic_pointer_cast<IlistPlayerComponentImpl>(_player->_component)->GetBounds();
+			return dynamic_cast<IlistPlayerComponentImpl *>(_player->_component)->GetBounds();
 		}
 
 };
@@ -224,7 +224,7 @@ ImageListLightPlayer::ImageListLightPlayer(std::string uri):
 
 	_controls.push_back(new IlistVideoSizeControlImpl(this));
 
-	_component = std::make_shared<IlistPlayerComponentImpl>(this, 0, 0, -1, -1);
+	_component = new IlistPlayerComponentImpl(this, 0, 0, -1, -1);
 }
 
 ImageListLightPlayer::~ImageListLightPlayer()
@@ -277,7 +277,7 @@ void ImageListLightPlayer::Run()
 			}
 		}
 
-    std::dynamic_pointer_cast<IlistPlayerComponentImpl>(_component)->UpdateComponent(frame);
+    dynamic_cast<IlistPlayerComponentImpl *>(_component)->UpdateComponent(frame);
 
 		try {
 			if (_decode_rate == 0) {
@@ -409,7 +409,7 @@ double ImageListLightPlayer::GetDecodeRate()
 	return _decode_rate;
 }
 
-std::shared_ptr<jcanvas::Component> ImageListLightPlayer::GetVisualComponent()
+jcanvas::Component * ImageListLightPlayer::GetVisualComponent()
 {
 	return _component;
 }

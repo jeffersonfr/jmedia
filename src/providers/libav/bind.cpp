@@ -244,7 +244,7 @@ class LibavVideoSizeControlImpl : public VideoSizeControl {
 
 		virtual void SetSource(int x, int y, int w, int h)
 		{
-      std::shared_ptr<LibavPlayerComponentImpl> impl = std::dynamic_pointer_cast<LibavPlayerComponentImpl>(_player->_component);
+      LibavPlayerComponentImpl *impl = dynamic_cast<LibavPlayerComponentImpl *>(_player->_component);
 
       std::unique_lock<std::mutex> lock(impl->_mutex);
 			
@@ -255,7 +255,7 @@ class LibavVideoSizeControlImpl : public VideoSizeControl {
 
 		virtual void SetDestination(int x, int y, int w, int h)
 		{
-      std::shared_ptr<LibavPlayerComponentImpl> impl = std::dynamic_pointer_cast<LibavPlayerComponentImpl>(_player->_component);
+      LibavPlayerComponentImpl *impl = dynamic_cast<LibavPlayerComponentImpl *>(_player->_component);
 
       std::unique_lock<std::mutex> lock(impl->_mutex);
 
@@ -264,12 +264,12 @@ class LibavVideoSizeControlImpl : public VideoSizeControl {
 
 		virtual jcanvas::jrect_t<int> GetSource()
 		{
-      return std::dynamic_pointer_cast<LibavPlayerComponentImpl>(_player->_component)->_src;
+      return dynamic_cast<LibavPlayerComponentImpl *>(_player->_component)->_src;
 		}
 
 		virtual jcanvas::jrect_t<int> GetDestination()
 		{
-      return std::dynamic_pointer_cast<LibavPlayerComponentImpl>(_player->_component)->GetBounds();
+      return dynamic_cast<LibavPlayerComponentImpl *>(_player->_component)->GetBounds();
 		}
 
 };
@@ -387,9 +387,9 @@ LibAVLightPlayer::LibAVLightPlayer(std::string uri):
 		throw std::runtime_error("Cannot recognize the media file");
 	}
 
-	_component = std::make_shared<LibavPlayerComponentImpl>(this, 0, 0, -1, -1);//iw, ih);
+	_component = new LibavPlayerComponentImpl(this, 0, 0, -1, -1);//iw, ih);
 
-	avplay_set_rendercallback(_provider, render_callback, (void *)_component.get());
+	avplay_set_rendercallback(_provider, render_callback, (void *)_component);
 	avplay_set_endofmediacallback(_provider, endofmedia_callback, (void *)this);
 		
 	if (_provider->wanted_stream[AVMEDIA_TYPE_AUDIO] != -1) {
@@ -568,7 +568,7 @@ double LibAVLightPlayer::GetDecodeRate()
 	return rate;
 }
 
-std::shared_ptr<jcanvas::Component> LibAVLightPlayer::GetVisualComponent()
+jcanvas::Component * LibAVLightPlayer::GetVisualComponent()
 {
 	return _component;
 }

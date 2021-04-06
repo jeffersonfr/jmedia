@@ -273,7 +273,7 @@ class XineVideoSizeControlImpl : public VideoSizeControl {
 
 		virtual void SetSource(int x, int y, int w, int h)
 		{
-      std::shared_ptr<XinePlayerComponentImpl> impl = std::dynamic_pointer_cast<XinePlayerComponentImpl>(_player->_component);
+      XinePlayerComponentImpl *impl = dynamic_cast<XinePlayerComponentImpl *>(_player->_component);
 
       std::unique_lock<std::mutex> lock(impl->_mutex);
 			
@@ -284,7 +284,7 @@ class XineVideoSizeControlImpl : public VideoSizeControl {
 
 		virtual void SetDestination(int x, int y, int w, int h)
 		{
-      std::shared_ptr<XinePlayerComponentImpl> impl = std::dynamic_pointer_cast<XinePlayerComponentImpl>(_player->_component);
+      XinePlayerComponentImpl *impl = dynamic_cast<XinePlayerComponentImpl *>(_player->_component);
 
       std::unique_lock<std::mutex> lock(impl->_mutex);
 
@@ -293,12 +293,12 @@ class XineVideoSizeControlImpl : public VideoSizeControl {
 
 		virtual jcanvas::jrect_t<int> GetSource()
 		{
-      return std::dynamic_pointer_cast<XinePlayerComponentImpl>(_player->_component)->_src;
+      return dynamic_cast<XinePlayerComponentImpl *>(_player->_component)->_src;
 		}
 
 		virtual jcanvas::jrect_t<int> GetDestination()
 		{
-      return std::dynamic_pointer_cast<XinePlayerComponentImpl>(_player->_component)->GetBounds();
+      return dynamic_cast<XinePlayerComponentImpl *>(_player->_component)->GetBounds();
 		}
 
 };
@@ -512,7 +512,7 @@ LibXineLightPlayer::LibXineLightPlayer(std::string uri):
 	_decode_rate = 1.0;
 	_frames_per_second = 0.0;
 	
-	_component = std::make_shared<XinePlayerComponentImpl>(this, 0, 0, -1, -1);
+	_component = new XinePlayerComponentImpl(this, 0, 0, -1, -1);
 
 	raw_visual_t t;
 
@@ -521,7 +521,7 @@ LibXineLightPlayer::LibXineLightPlayer(std::string uri):
 	t.supported_formats = (int)(XINE_VORAW_RGB | XINE_VORAW_YV12 | XINE_VORAW_YUY2);
 	t.raw_output_cb = render_callback;
 	t.raw_overlay_cb = overlay_callback;
-	t.user_data = _component.get();
+	t.user_data = _component;
 
   _xine = xine_new();
 	
@@ -809,7 +809,7 @@ double LibXineLightPlayer::GetDecodeRate()
 	return rate;
 }
 
-std::shared_ptr<jcanvas::Component> LibXineLightPlayer::GetVisualComponent()
+jcanvas::Component * LibXineLightPlayer::GetVisualComponent()
 {
 	return _component;
 }
