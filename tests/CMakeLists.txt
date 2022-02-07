@@ -9,12 +9,9 @@ macro(module_test)
     COMMAND $<TARGET_FILE:${ARGV0}>
   )
 
-  include_directories(
-    "../core/src/include"
-  )
-
-  target_link_libraries(${ARGV0}_test PUBLIC
-    jcanvas-core
+  target_link_libraries(${ARGV0}_test
+    PRIVATE
+      jmedia
   )
 endmacro()
 

@@ -5,12 +5,9 @@ macro(module_test)
     ${ARGV0}.cpp
   )
 
-  include_directories(
-    "../src/include"
-  )
-
-  target_link_libraries(${ARGV0}_example PUBLIC
-    jmedia
+  target_link_libraries(${ARGV0}_example
+    PRIVATE
+      jmedia
   )
 endmacro()
 
