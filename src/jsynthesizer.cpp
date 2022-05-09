@@ -56,12 +56,12 @@ double sine_wave(double a)
   return sin(a);
 }
 
-double noise_wave(double a) 
+double noise_wave(double) 
 {
   return 2*(double)rand()/RAND_MAX - 1;
 }
 
-double silence_wave(double a)
+double silence_wave(double)
 {
   return 0;
 }

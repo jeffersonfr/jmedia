@@ -135,11 +135,13 @@ static int FetchData(std::istream &stream, void *data, uint32_t len)
 
 static int ReadColorMap(std::istream &stream, int number, uint8_t buf[3][MAXCOLORMAPSIZE])
 {
-	uint8_t rgb[3*number];
+	uint8_t *rgb = new uint8_t[3*number];
 	int i;
 
 	if (FetchData(stream, rgb, sizeof(rgb))) {
 		printf("bad colormap");
+
+    delete [] rgb;
 
 		return -1;
 	}
@@ -149,6 +151,8 @@ static int ReadColorMap(std::istream &stream, int number, uint8_t buf[3][MAXCOLO
 		buf[CM_GREEN][i] = rgb[i*3+1];
 		buf[CM_BLUE][i] = rgb[i*3+2];
 	}
+
+  delete [] rgb;
 
 	return 0;
 }
@@ -1024,7 +1028,7 @@ void GIFLightPlayer::Close()
   _mutex.unlock();
 }
 
-void GIFLightPlayer::SetCurrentTime(uint64_t time)
+void GIFLightPlayer::SetCurrentTime(uint64_t)
 {
 }
 

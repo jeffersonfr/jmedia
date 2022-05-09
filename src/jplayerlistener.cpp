@@ -29,23 +29,23 @@ PlayerListener::~PlayerListener()
 {
 }
 
-void PlayerListener::MediaStarted(PlayerEvent *event)
+void PlayerListener::MediaStarted(PlayerEvent *)
 {
 }
 
-void PlayerListener::MediaResumed(PlayerEvent *event)
+void PlayerListener::MediaResumed(PlayerEvent *)
 {
 }
 
-void PlayerListener::MediaPaused(PlayerEvent *event)
+void PlayerListener::MediaPaused(PlayerEvent *)
 {
 }
 
-void PlayerListener::MediaStopped(PlayerEvent *event)
+void PlayerListener::MediaStopped(PlayerEvent *)
 {
 }
 
-void PlayerListener::MediaFinished(PlayerEvent *event)
+void PlayerListener::MediaFinished(PlayerEvent *)
 {
 }
 

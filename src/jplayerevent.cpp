@@ -21,7 +21,7 @@
 
 namespace jmedia {
 
-PlayerEvent::PlayerEvent(void *source, jplayerevent_type_t type)
+PlayerEvent::PlayerEvent(void *, jplayerevent_type_t type)
 {
   _type = type;
 }

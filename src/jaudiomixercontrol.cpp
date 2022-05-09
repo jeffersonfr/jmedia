@@ -39,11 +39,11 @@ float Audio::GetVolume()
   return 0.0f;
 }
 
-void Audio::SetLoopEnabled(bool enabled)
+void Audio::SetLoopEnabled(bool)
 {
 }
 
-void Audio::SetVolume(float volume)
+void Audio::SetVolume(float)
 {
 }
 
@@ -57,21 +57,21 @@ AudioMixerControl::~AudioMixerControl()
 {
 }
 
-Audio * AudioMixerControl::CreateAudio(std::string filename)
+Audio * AudioMixerControl::CreateAudio(std::string)
 {
   return nullptr;
 }
 
-Audio * AudioMixerControl::CreateAudio(std::istream &stream, jaudio_format_t format, int frequency, int channels)
+Audio * AudioMixerControl::CreateAudio(std::istream &, jaudio_format_t, int, int)
 {
   return nullptr;
 }
 
-void AudioMixerControl::StartSound(Audio *audio)
+void AudioMixerControl::StartSound(Audio *)
 {
 }
 
-void AudioMixerControl::StopSound(Audio *audio)
+void AudioMixerControl::StopSound(Audio *)
 {
 }
 

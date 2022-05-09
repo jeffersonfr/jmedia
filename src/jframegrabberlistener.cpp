@@ -29,7 +29,7 @@ FrameGrabberListener::~FrameGrabberListener()
 {
 }
 
-void FrameGrabberListener::FrameGrabbed(FrameGrabberEvent *event)
+void FrameGrabberListener::FrameGrabbed(FrameGrabberEvent *)
 {
 }
 

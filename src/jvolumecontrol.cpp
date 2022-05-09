@@ -35,7 +35,7 @@ int VolumeControl::GetLevel()
   return 0;
 }
 
-void VolumeControl::SetLevel(int level)
+void VolumeControl::SetLevel(int)
 {
 }
 
@@ -44,7 +44,7 @@ bool VolumeControl::IsMute()
   return false;
 }
 
-void VolumeControl::SetMute(bool b)
+void VolumeControl::SetMute(bool)
 {
 }
 

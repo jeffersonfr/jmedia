@@ -39,7 +39,7 @@ jaudio_config_mode_t AudioConfigurationControl::GetHDMIAudioMode()
   return jaudio_config_mode_t::Pcm;
 }
 
-void AudioConfigurationControl::SetSPDIFPCM(bool pcm)
+void AudioConfigurationControl::SetSPDIFPCM(bool)
 {
 }
 
@@ -48,7 +48,7 @@ bool AudioConfigurationControl::IsSPDIFPCM()
   return false;
 }
 
-void AudioConfigurationControl::SetAudioDelay(int64_t delay)
+void AudioConfigurationControl::SetAudioDelay(int64_t)
 {
 }
 

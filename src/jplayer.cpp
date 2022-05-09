@@ -71,7 +71,7 @@ void Player::Close()
 {
 }
 
-void Player::SetCurrentTime(uint64_t i)
+void Player::SetCurrentTime(uint64_t)
 {
 }
 
@@ -85,7 +85,7 @@ uint64_t Player::GetMediaTime()
   return -1LL;
 }
 
-void Player::SetLoop(bool b)
+void Player::SetLoop(bool)
 {
 }
 
@@ -99,7 +99,7 @@ double Player::GetDecodeRate()
   return 0.0;
 }
 
-void Player::SetDecodeRate(double rate)
+void Player::SetDecodeRate(double)
 {
 }
 

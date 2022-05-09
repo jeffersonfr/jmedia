@@ -3,12 +3,13 @@ exec_prefix="${prefix}"
 libdir="${prefix}/lib"
 includedir="${prefix}/include"
 
-Name: jCanvas
-Description: A library for abstract a host graphic engine
+Name: jMedia
+Description: A library for abstract media engine
 URL: https://github.com/me/jeffersonfr/jmedia
 Version: 0.0.1
-Requires: @PKGCONF_REQ_PUB@
-Requires.private: @PKGCONF_REQ_PRIV@
-Cflags: -I"${includedir}" @JCANVAS_INCLUDE_DIRS@
-Libs: -L"${libdir}" -ljmedia @JMEDIA_LIBRARIES@
-Libs.private: -L"${libdir}" -ljmedia @JMEDIA_LIBRARIES@
+Requires: cairo jcanvas jdemux
+Requires.private:
+Cflags: -I"${includedir}" @JMEDIA_INCLUDE_DIRS@
+Cflags.private:
+Libs: -L"${libdir}" -l$<TARGET_FILE_BASE_NAME:jMedia::Media>
+Libs.private:

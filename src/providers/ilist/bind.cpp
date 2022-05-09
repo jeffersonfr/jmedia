@@ -369,7 +369,7 @@ void ImageListLightPlayer::Close()
 	_is_closed = true;
 }
 
-void ImageListLightPlayer::SetCurrentTime(uint64_t time)
+void ImageListLightPlayer::SetCurrentTime(uint64_t)
 {
 }
 

@@ -21,8 +21,6 @@ set(SRCS
   jvolumecontrol.cpp
 )
 
-include (cmake/MediaProviders.cmake)
-
 # find libcairo
 pkg_check_modules(Cairo REQUIRED IMPORTED_TARGET cairo)
 
@@ -63,10 +61,9 @@ target_link_libraries(${PROJECT_NAME}
     PkgConfig::jDemux
 )
 
-message ("\tMedia Providers: ${MEDIA_LIST}")
-message ("\t\tInclude Directories: ${MEDIA_PROVIDERS_INCLUDE_DIRS}")
-message ("\t\tLibrary Directories: ${MEDIA_PROVIDERS_LIBRARY_DIRS}")
-message ("\t\tLibraries: ${MEDIA_PROVIDERS_LIBRARIES}")
+add_library(jMedia::Media ALIAS ${PROJECT_NAME})
+
+include (${PROJECT_SOURCE_DIR}/cmake/Providers.cmake)
 
 install(DIRECTORY include/jmedia DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
 install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)

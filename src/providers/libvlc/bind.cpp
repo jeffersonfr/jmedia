@@ -202,7 +202,7 @@ static void * LockMediaSurface(void *data, void **p_pixels)
 	return nullptr; 
 }
 
-static void UnlockMediaSurface(void *data, void *id, void *const *p_pixels)
+static void UnlockMediaSurface(void *data, void *, void *const *)
 {
 	LibvlcPlayerComponentImpl *cmp = reinterpret_cast<LibvlcPlayerComponentImpl *>(data);
 
@@ -211,7 +211,7 @@ static void UnlockMediaSurface(void *data, void *id, void *const *p_pixels)
 	image->UnlockData();
 }
 
-static void DisplayMediaSurface(void *data, void *id)
+static void DisplayMediaSurface(void *data, void *)
 {
 	reinterpret_cast<LibvlcPlayerComponentImpl *>(data)->Repaint();
 }
@@ -637,12 +637,25 @@ LibVLCLightPlayer::LibVLCLightPlayer(std::string uri):
 	libvlc_video_set_format(_provider, "RV32", iw, ih, iw*4);
 	libvlc_video_set_callbacks(_provider, LockMediaSurface, UnlockMediaSurface, DisplayMediaSurface, _component);
 
-	_media_info.title = std::string(libvlc_media_get_meta(media, libvlc_meta_Title)?:"");
-	_media_info.author = std::string(libvlc_media_get_meta(media, libvlc_meta_Artist)?:"");
-	_media_info.album = std::string(libvlc_media_get_meta(media, libvlc_meta_Album)?:"");
-	_media_info.genre = std::string(libvlc_media_get_meta(media, libvlc_meta_Genre)?:"");
-	_media_info.comments = std::string(libvlc_media_get_meta(media, libvlc_meta_Description)?:"");
-	_media_info.date = std::string(libvlc_media_get_meta(media, libvlc_meta_Date)?:"");
+  char const *str;
+
+  str = libvlc_media_get_meta(media, libvlc_meta_Title);
+	_media_info.title = std::string((str != nullptr)?str:"");
+
+  str = libvlc_media_get_meta(media, libvlc_meta_Artist);
+	_media_info.author = std::string((str != nullptr)?str:"");
+
+  str = libvlc_media_get_meta(media, libvlc_meta_Album);
+	_media_info.album = std::string((str != nullptr)?str:"");
+
+  str = libvlc_media_get_meta(media, libvlc_meta_Genre);
+	_media_info.genre = std::string((str != nullptr)?str:"");
+
+  str = libvlc_media_get_meta(media, libvlc_meta_Description);
+	_media_info.comments = std::string((str != nullptr)?str:"");
+
+  str = libvlc_media_get_meta(media, libvlc_meta_Date);
+	_media_info.date = std::string((str != nullptr)?str:"");
 	
 	/*
 	libvlc_meta_Copyright

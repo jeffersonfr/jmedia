@@ -30,23 +30,23 @@ VideoFormatControl::~VideoFormatControl()
 {
 }
 
-void VideoFormatControl::SetAspectRatio(jaspect_ratio_t t)
+void VideoFormatControl::SetAspectRatio(jaspect_ratio_t)
 {
 }
 
-void VideoFormatControl::SetFramesPerSecond(double fps)
+void VideoFormatControl::SetFramesPerSecond(double)
 {
 }
 
-void VideoFormatControl::SetContentMode(jvideo_mode_t t)
+void VideoFormatControl::SetContentMode(jvideo_mode_t)
 {
 }
 
-void VideoFormatControl::SetVideoFormatHD(jhd_video_format_t vf)
+void VideoFormatControl::SetVideoFormatHD(jhd_video_format_t)
 {
 }
 
-void VideoFormatControl::SetVideoFormatSD(jsd_video_format_t vf)
+void VideoFormatControl::SetVideoFormatSD(jsd_video_format_t)
 {
 }
 

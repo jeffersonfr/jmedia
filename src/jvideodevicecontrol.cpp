@@ -35,22 +35,22 @@ const std::vector<jvideo_control_t> & VideoDeviceControl::GetControls()
   return _controls;
 }
 
-bool VideoDeviceControl::HasControl(jvideo_control_t id)
+bool VideoDeviceControl::HasControl(jvideo_control_t)
 {
   return false;
 }
 
-int VideoDeviceControl::GetValue(jvideo_control_t id)
+int VideoDeviceControl::GetValue(jvideo_control_t)
 {
   return -1;
 }
 
-bool VideoDeviceControl::SetValue(jvideo_control_t id, int value)
+bool VideoDeviceControl::SetValue(jvideo_control_t, int)
 {
   return false;
 }
 
-void VideoDeviceControl::Reset(jvideo_control_t id)
+void VideoDeviceControl::Reset(jvideo_control_t)
 {
 }
 

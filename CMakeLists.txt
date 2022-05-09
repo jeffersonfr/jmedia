@@ -9,43 +9,29 @@ option(EXAMPLES "Enable examples" OFF)
 option(SANITIZE "Enable sanitize" OFF)
 option(COVERAGE "Enable coverage" OFF)
 option(PROFILE "Enable profile" OFF)
-option(DEBUG "Enable debug" OFF)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(PkgConfig REQUIRED)
+add_compile_options(-Wall -Wextra -Wpedantic -pedantic -Werror)
 
 if (COVERAGE)
-  set(COVERAGE_FLAGS
-    "--coverage -lgcov"
-  )
+  add_compile_options(--coverage -fprofile-arcs -ftest-coverage)
+  add_link_options(-fprofile-arcs -lgcov)
 endif()
 
 if (SANITIZE)
-  set(SANITIZE_FLAGS
-    "-fsanitize=address -fsanitize=leak -fsanitize=undefined -fsanitize-address-use-after-scope"
-  )
+  set(SANITIZE_FLAGS -fsanitize=address -fsanitize=leak -fsanitize=undefined -fsanitize-address-use-after-scope -U_FORTIFY_SOURCE -fno-omit-frame-pointer -fno-common)
+
+  add_compile_options(${SANITIZE_FLAGS})
+  add_link_options(${SANITIZE_FLAGS} -lasan -lubsan)
 endif()
 
 if (PROFILE)
-  set(PROFILE_FLAGS
-    "-pg -fprofile-arcs -ftest-coverage -fprofile-generate -fno-inline -O0"
-  )
+  add_compile_options(-pg -fprofile-arcs -ftest-coverage -fprofile-generate -fno-inline -O0)
 endif()
 
-if (DEBUG)
-  set(DEBUG_FLAGS
-    "-g -ggdb"
-  )
-endif()
-
-set(CMAKE_CXX_FLAGS 
-  "${CMAKE_CXX_FLAGS} ${COVERAGE_FLAGS} ${SANITIZE_FLAGS} ${DEBUG_FLAGS}"
-)
-
-set(CMAKE_EXE_LINKER_FLAGS 
-  "${CMAKE_EXE_LINKER_FLAGS} ${COVERAGE_FLAGS} ${SANITIZE_FLAGS} ${DEBUG_FLAGS}"
-)
+find_package(PkgConfig REQUIRED)
 
 enable_testing()
 
@@ -60,13 +46,6 @@ if (EXAMPLES)
 endif()
 
 # generate jmedia.pc
-set (JMEDIA_INCLUDE_DIRS "")
-set (JMEDIA_LIBRARIES "-lpthread")
-
-configure_file(
-  ${PROJECT_SOURCE_DIR}/jmedia.pc.in
-  ${PROJECT_BINARY_DIR}/jmedia.pc
-  @ONLY
-)
-
+configure_file(${PROJECT_SOURCE_DIR}/jmedia.pc.in ${PROJECT_BINARY_DIR}/jmedia.pc.gen @ONLY)
+file(GENERATE OUTPUT ${CMAKE_BINARY_DIR}/jmedia.pc INPUT "${CMAKE_BINARY_DIR}/jmedia.pc.gen")
 install(FILES ${CMAKE_BINARY_DIR}/jmedia.pc DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/pkgconfig)
