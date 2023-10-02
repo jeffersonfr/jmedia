@@ -3,6 +3,12 @@ cmake_minimum_required (VERSION 3.13)
 include (${CMAKE_SOURCE_DIR}/Defines.cmake)
 
 project (jmedia-project)
+project(jmedia
+  LANGUAGES CXX
+  HOMEPAGE_URL https://github.com/jeffersonfr/jmedia
+  DESCRIPTION "A library for abstract media engine"
+  VERSION 1.0.0
+)
 
 option(TESTS "Enable unit tests" OFF)
 option(EXAMPLES "Enable examples" OFF)
@@ -45,7 +51,7 @@ if (EXAMPLES)
   add_subdirectory(examples)
 endif()
 
-# generate jmedia.pc
-configure_file(${PROJECT_SOURCE_DIR}/jmedia.pc.in ${PROJECT_BINARY_DIR}/jmedia.pc.gen @ONLY)
-file(GENERATE OUTPUT ${CMAKE_BINARY_DIR}/jmedia.pc INPUT "${CMAKE_BINARY_DIR}/jmedia.pc.gen")
+# generate pc file
+configure_file(jmedia.pc.in jmedia.pc @ONLY)
+
 install(FILES ${CMAKE_BINARY_DIR}/jmedia.pc DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/pkgconfig)
