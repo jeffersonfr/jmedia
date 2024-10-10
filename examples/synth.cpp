@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "jmedia/jsynthesizer.h"
 
-int main(int argc, char *argv[]) 
+int main(int, char *[]) 
 {
 	jmedia::Synthesizer s("default", 2);
 

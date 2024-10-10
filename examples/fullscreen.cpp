@@ -300,27 +300,27 @@ class PlayerTest : public jcanvas::Frame, public jmedia::PlayerListener, public 
       */
 		}
 
-		virtual void MediaStarted(jmedia::PlayerEvent *event)
+		virtual void MediaStarted(jmedia::PlayerEvent *)
 		{
 			std::cout << "Media Started" << std::endl;
 		}
 
-		virtual void MediaResumed(jmedia::PlayerEvent *event)
+		virtual void MediaResumed(jmedia::PlayerEvent *)
 		{
 			std::cout << "Media Resumed" << std::endl;
 		}
 
-		virtual void MediaPaused(jmedia::PlayerEvent *event)
+		virtual void MediaPaused(jmedia::PlayerEvent *)
 		{
 			std::cout << "Media Paused" << std::endl;
 		}
 
-		virtual void MediaStopped(jmedia::PlayerEvent *event)
+		virtual void MediaStopped(jmedia::PlayerEvent *)
 		{
 			std::cout << "Media Stopped" << std::endl;
 		}
 
-		virtual void MediaFinished(jmedia::PlayerEvent *event)
+		virtual void MediaFinished(jmedia::PlayerEvent *)
 		{
 			std::cout << "Media Finished" << std::endl;
 		}
