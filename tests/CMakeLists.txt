@@ -1,5 +1,3 @@
-cmake_minimum_required (VERSION 3.0)
-
 macro(module_test)
   add_executable(${ARGV0}_test
     ${ARGV0}.cpp

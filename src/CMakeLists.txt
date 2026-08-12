@@ -1,5 +1,3 @@
-project (jmedia)
-
 include (${PROJECT_SOURCE_DIR}/../Defines.cmake)
 
 set(SRCS
