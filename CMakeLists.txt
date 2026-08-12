@@ -1,7 +1,5 @@
 cmake_minimum_required (VERSION 3.20)
 
-include (${CMAKE_SOURCE_DIR}/Defines.cmake)
-
 project(jmedia
   LANGUAGES CXX
   HOMEPAGE_URL https://github.com/jeffersonfr/jmedia
@@ -19,6 +17,8 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_compile_options(-Wall -Wextra -Wpedantic -pedantic -Werror)
+
+include (${PROJECT_SOURCE_DIR}/Defines.cmake)
 
 if (JMEDIA_COVERAGE)
   add_compile_options(--coverage -fprofile-arcs -ftest-coverage)

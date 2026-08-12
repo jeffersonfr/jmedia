@@ -752,27 +752,21 @@ class GifVideoSizeControlImpl : public VideoSizeControl {
 		{
 		}
 
-		virtual void SetSource(int x, int y, int w, int h)
+		virtual void SetSource(jcanvas::jrect_t<int> rect)
 		{
       GifPlayerComponentImpl *impl = dynamic_cast<GifPlayerComponentImpl *>(_player->_component);
 
       impl->_mutex.lock();
-			
-			impl->_src = {
-        x, y, w, h
-      };
-      
+			impl->_src = rect;
       impl->_mutex.unlock();
 		}
 
-		virtual void SetDestination(int x, int y, int w, int h)
+		virtual void SetDestination(jcanvas::jrect_t<int> rect)
 		{
       GifPlayerComponentImpl *impl = dynamic_cast<GifPlayerComponentImpl *>(_player->_component);
 
       impl->_mutex.lock();
-
-			impl->SetBounds(x, y, w, h);
-      
+			impl->SetBounds(rect);
       impl->_mutex.unlock();
 		}
 

@@ -1,4 +1,4 @@
-include (${PROJECT_SOURCE_DIR}/../Defines.cmake)
+include (${PROJECT_SOURCE_DIR}/Defines.cmake)
 
 set(SRCS
   jaudioconfigurationcontrol.cpp
@@ -42,7 +42,7 @@ target_include_directories(${PROJECT_NAME}
   PRIVATE
     ${MEDIA_PROVIDERS_INCLUDE_DIRS}
   PUBLIC
-    ${PROJECT_SOURCE_DIR}/include
+    ${PROJECT_SOURCE_DIR}/src/include
 )
 
 target_link_directories(${PROJECT_NAME}
@@ -61,7 +61,7 @@ target_link_libraries(${PROJECT_NAME}
 
 add_library(jMedia::Media ALIAS ${PROJECT_NAME})
 
-include (${PROJECT_SOURCE_DIR}/cmake/Providers.cmake)
+include (${PROJECT_SOURCE_DIR}/src/cmake/Providers.cmake)
 
 install(DIRECTORY include/jmedia DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
 install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)

@@ -408,24 +408,22 @@ class LibvlcVideoSizeControlImpl : public VideoSizeControl {
 		{
 		}
 
-		virtual void SetSource(int x, int y, int w, int h)
+		virtual void SetSource(jcanvas::jrect_t<int> rect)
 		{
       LibvlcPlayerComponentImpl *impl = dynamic_cast<LibvlcPlayerComponentImpl *>(_player->_component);
 
       std::unique_lock<std::mutex> lock(impl->_mutex);
 			
-			impl->_src = {
-        x, y, w, h
-      };
+			impl->_src = rect;
 		}
 
-		virtual void SetDestination(int x, int y, int w, int h)
+		virtual void SetDestination(jcanvas::jrect_t<int> rect)
 		{
       LibvlcPlayerComponentImpl *impl = dynamic_cast<LibvlcPlayerComponentImpl *>(_player->_component);
 
       std::unique_lock<std::mutex> lock(impl->_mutex);
 
-			impl->SetBounds(x, y, w, h);
+			impl->SetBounds(rect);
 		}
 
 		virtual jcanvas::jrect_t<int> GetSource()
